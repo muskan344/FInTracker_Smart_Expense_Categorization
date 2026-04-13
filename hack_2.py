@@ -3,9 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sqlite3
 
-# -------------------------------
+
 # CSV Parser
-# -------------------------------
 class CSVParser:
     def __init__(self, file_path):
         self.file_path = file_path
@@ -13,10 +12,7 @@ class CSVParser:
     def load_data(self):
         return pd.read_csv(self.file_path)
 
-
-# -------------------------------
 # Data Cleaner
-# -------------------------------
 class DataCleaner:
     def clean(self, df):
         df['description'] = df['description'].astype(str).str.upper()
@@ -44,9 +40,7 @@ class DataCleaner:
         return df
 
 
-# -------------------------------
 # Categorizer
-# -------------------------------
 class Categorizer:
     def categorize(self, desc):
         if "SALARY" in desc or "BONUS" in desc:
@@ -75,9 +69,7 @@ class Categorizer:
             return "Other"
 
 
-# -------------------------------
 # NEW: Database Manager
-# -------------------------------
 class DatabaseManager:
     def __init__(self, db_name="expenses.db"):
         self.conn = sqlite3.connect(db_name)
@@ -103,9 +95,7 @@ class DatabaseManager:
         return pd.read_sql_query("SELECT * FROM transactions", self.conn)
 
 
-# -------------------------------
 # Analytics
-# -------------------------------
 class Analytics:
     def __init__(self, df):
         self.df = df
@@ -160,9 +150,7 @@ class Analytics:
         plt.close()
 
 
-# -------------------------------
 # Main Class
-# -------------------------------
 class ExpenseManager:
     def __init__(self, file_path):
         self.parser = CSVParser(file_path)
@@ -198,9 +186,7 @@ class ExpenseManager:
         print("\n✅ Data saved in CSV + Database + Graphs generated!")
 
 
-# -------------------------------
 # Run
-# -------------------------------
 if __name__ == "__main__":
     app = ExpenseManager("transactions.csv")
     app.run()
